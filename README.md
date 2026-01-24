@@ -162,5 +162,3 @@ I implemented a modular structure to demonstrate scalability and separation of c
 * **Strict Validation**: Prevents SQL Injection via `sortBy` parameter whitelist.
 * **Force JSON**: Middleware to ensure API always returns JSON responses.
 * **Environment Protection**: Dev routes are strictly limited to `local` environment.
-
-```
