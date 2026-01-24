@@ -55,7 +55,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "2|siH4vJULMf6PI8GEfCp05yiPmqlczDZpa9f2DXgn898373ac",
+                  "value": "2|UsyNb4U8QTVqhXdqbHBcO5AvySkWfa7X3vEcEMfU588c1741",
                   "type": "string"
                 }
               ]
@@ -70,7 +70,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:8000/api/users?sortBy=email&sortDirection=asc",
+              "raw": "http://localhost:8000/api/users?sortBy=email&sortDirection=asc&page=2",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -88,6 +88,10 @@
                 {
                   "key": "sortDirection",
                   "value": "asc"
+                },
+                {
+                  "key": "page",
+                  "value": "2"
                 }
               ]
             },
