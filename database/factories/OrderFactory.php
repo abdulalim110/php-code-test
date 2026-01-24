@@ -11,8 +11,6 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => User::factory(), 
-            'product_name' => $this->faker->word(),
-            'amount' => $this->faker->numberBetween(10000, 500000),
         ];
     }
 }
