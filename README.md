@@ -61,8 +61,6 @@ php artisan serve
 
 ```
 
-
-
 ---
 
 ## 🧪 How to Test (Reviewer Guide)
@@ -116,7 +114,34 @@ Since the requirement focuses on the `can_edit` logic which requires Authenticat
 * **Headers**: `Authorization: Bearer <YOUR_TOKEN>`
 * **Check**: Look at the `can_edit` field in the response. It will change based on the Token used (Admin vs Manager vs User).
 
+#### Available Query Parameters
+
+| Parameter      | Type   | Default      | Description |
+| :---           | :---   | :---         | :--- |
+| `page`         | `int`  | `1`          | Pagination page number. |
+| `per_page`     | `int`  | `10`         | Items per page. |
+| `search`       | `string`| `null`      | Search by name or email. |
+| `sortBy`       | `string`| `created_at`| Allowed: `name`, `email`, `created_at`. |
+| `sortDirection`| `string`| `desc`       | Allowed: `asc`, `desc`. |
+
 ---
+
+### Option C: Postman Collection (Fastest Way) 🚀
+I have included a Postman Collection to help you test the API endpoints quickly without manual setup.
+1. Import `Binar_Backend_Test.postman_collection.json` into your Postman.
+2. Set the `base_url` variable to `http://localhost:8000/api`.
+3. Use the Login endpoint to get a token, and paste it into the `token` variable (or Authorization header).
+
+### 📧 Email Testing (Important)
+
+Since this project is configured for a local development environment, the `MAIL_MAILER` is set to `log` by default. You won't receive real emails.
+
+To verify that the **Welcome Email** and **Admin Notification** are triggered upon user registration:
+
+1. Open `storage/logs/laravel.log`.
+2. Clear the log file (optional, for better visibility).
+3. Create a new user via API.
+4. Check the log file. You should see the HTML email content printed there
 
 ## 📂 Project Structure Highlights
 
@@ -137,10 +162,5 @@ I implemented a modular structure to demonstrate scalability and separation of c
 * **Strict Validation**: Prevents SQL Injection via `sortBy` parameter whitelist.
 * **Force JSON**: Middleware to ensure API always returns JSON responses.
 * **Environment Protection**: Dev routes are strictly limited to `local` environment.
-
-```
-
-Silakan langsung dipasang, Mas! Ini udah lengkap banget.
-Kalau udah `git push`, kasih tau ya, biar kita rayakan! 🥳🚀
 
 ```

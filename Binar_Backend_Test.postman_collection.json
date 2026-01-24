@@ -1,0 +1,233 @@
+{
+  "info": {
+    "_postman_id": "42669d06-f149-44aa-b953-9c608f03a097",
+    "name": "Binar Backend Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3450128"
+  },
+  "item": [
+    {
+      "name": "Auth (Dev)",
+      "item": [
+        {
+          "name": "Dev Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@example.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/dev/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "dev",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get Users (Admin View)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "2|siH4vJULMf6PI8GEfCp05yiPmqlczDZpa9f2DXgn898373ac",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/users?sortBy=email&sortDirection=asc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "sortBy",
+                  "value": "email"
+                },
+                {
+                  "key": "sortDirection",
+                  "value": "asc"
+                }
+              ]
+            },
+            "description": "### ⚠️ TEST INSTRUCTION\n\nPlease ensure the `{{token}}` variable is updated with an **ADMIN Token** (e.g., login with `admin@example.com`).\n\n### ✅ EXPECTATION\n\nInspect the response body. The `can_edit` field must be **TRUE** for **ALL users** in the list.\n\n- Logic: Admins have full access to edit anyone (including other Admins and Managers)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Users (Manager View)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "3|Ati74yfymn4bgWeFXTUFTwG2zMdDx7vHMEt1NLFS6e482aa0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/users?search=example&sortBy=name&sortDirection=asc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "example"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "name"
+                },
+                {
+                  "key": "sortDirection",
+                  "value": "asc"
+                }
+              ]
+            },
+            "description": "### ⚠️ TEST INSTRUCTION\n\nPlease ensure the `{{token}}` variable is updated with a **MANAGER Token** (e.g., login with `manager@example.com`).\n\n### ✅ EXPECTATION\n\nInspect the response body and check the `can_edit` field:\n\n1. **Find an Admin user:** `can_edit` must be **FALSE**.\n    \n2. **Find a Standard User:** `can_edit` must be **TRUE**.\n    \n\n- Logic: Managers can manage Users but cannot touch Admins."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Users (User View)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "1|Obt4Tei9ducmuPPf1YKoWsyoYBar7kQuSK0unaLY578d8bf2",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer ",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/users?search=example.com&sortBy=created_at",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "example.com"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "created_at"
+                }
+              ]
+            },
+            "description": "### ⚠️ TEST INSTRUCTION\n\nPlease ensure the `{{token}}` variable is updated with a **STANDARD USER Token**.\n\n### ✅ EXPECTATION\n\nInspect the response body and check the `can_edit` field:\n\n1. **Find the user's own profile** (match the ID/Email): `can_edit` must be **TRUE**.\n    \n2. **Find any other user:** `can_edit` must be **FALSE**.\n    \n\n- Logic: Standard users can only edit their own profile."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Users",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Abdul Senior\",\r\n    \"email\": \"abdul@binar.test\",\r\n    \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
