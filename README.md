@@ -1,7 +1,7 @@
 
-# Binar Technical Test - Backend (User Management API)
+# Binar PHP Code Test (User Management API)
 
-This repository contains the solution for the Binar Technical Test (Backend). It is a RESTful API built with **Laravel 12**, focusing on clean architecture, scalability, and secure role-based access control.
+This repository contains the solution for the Binar PHP Code Test. It is a RESTful API built with **Laravel 12**, focusing on clean architecture, scalability, and secure role-based access control.
 
 ## 🚀 Key Features
 
