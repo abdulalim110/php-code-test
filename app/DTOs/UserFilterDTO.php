@@ -18,7 +18,7 @@ class UserFilterDTO
         return new self(
             search: $request->query('search'),
             sortBy: $request->query('sortBy', 'created_at'),
-            sortDirection: 'desc', 
+            sortDirection: $request->query('sortDirection', 'desc'), 
             perPage: (int) $request->query('per_page', 10),
         );
     }
