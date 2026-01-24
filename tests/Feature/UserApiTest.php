@@ -85,4 +85,41 @@ class UserApiTest extends TestCase
         $response->assertUnprocessable() 
                  ->assertJsonValidationErrors(['sortBy']); 
     }
+
+    public function test_pagination_works_correctly(): void
+    {
+        $viewer = User::factory()->create();
+
+        User::factory()->count(15)->create();
+
+        $response = $this->actingAs($viewer)
+                         ->getJson('/api/users?page=1&per_page=5');
+
+        $response->assertOk()
+                 ->assertJsonCount(5, 'data')
+                 ->assertJsonPath('meta.total', 16)
+                 ->assertJsonPath('meta.per_page', 5);
+    }
+
+
+public function test_sorting_direction_works(): void
+    {
+        $viewer = User::factory()->create();
+        
+        User::factory()->create(['name' => 'Tom']);
+        User::factory()->create(['name' => 'Fred']);
+
+        $responseDesc = $this->actingAs($viewer)
+                             ->getJson('/api/users?sortBy=name&sortDirection=desc');
+        
+        $responseDesc->assertOk();
+        $firstUserDesc = $responseDesc->json('data.0.name');
+        
+        $responseAsc = $this->actingAs($viewer)
+                            ->getJson('/api/users?sortBy=name&sortDirection=asc');
+        
+        $firstUserAsc = $responseAsc->json('data.0.name');
+        
+        $this->assertNotEquals($firstUserDesc, $firstUserAsc);
+    }
 }
