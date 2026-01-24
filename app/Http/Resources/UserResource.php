@@ -17,7 +17,6 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // Ambil user yang lagi login (untuk cek can_edit)
         $currentUser = $request->user();
 
         return [
