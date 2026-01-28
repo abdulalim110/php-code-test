@@ -134,14 +134,28 @@ I have included a Postman Collection to help you test the API endpoints quickly 
 
 ### 📧 Email Testing (Important)
 
-Since this project is configured for a local development environment, the `MAIL_MAILER` is set to `log` by default. You won't receive real emails.
+This project simulates a production environment where high-performance is priority.
 
-To verify that the **Welcome Email** and **Admin Notification** are triggered upon user registration:
+* **Admin Notifications** are sent **Synchronously** (Real-time alert).
+* **Welcome Emails** are queued and sent **Asynchronously** to ensure a fast API response time for the user.
 
-1. Open `storage/logs/laravel.log`.
-2. Clear the log file (optional, for better visibility).
-3. Create a new user via API.
-4. Check the log file. You should see the HTML email content printed there
+Since `MAIL_MAILER` is set to `log`, you won't receive real emails, but you can verify the dispatch process via logs.
+
+#### How to Verify:
+
+1. **Open the Log File:**
+Tail the logs at `storage/logs/laravel.log`.
+2. **Trigger the API:**
+Create a new user via `POST /api/users`.
+* *Observation:* You will immediately see the **Admin Notification** in the log.
+
+
+3. **Process the Queue (Crucial Step):**
+Because the Welcome Email is queued in the database, you must run the worker to process it:
+```bash
+php artisan queue:work
+
+```
 
 ## 📂 Project Structure Highlights
 
